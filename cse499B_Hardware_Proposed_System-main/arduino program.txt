@@ -1,0 +1,633 @@
+#include <SoftwareSerial.h>
+#include <Servo.h>
+
+SoftwareSerial mySerial(7, 8); // RX, TX
+
+// servo
+Servo myservo1;
+Servo myservo2;
+Servo myservo3;
+Servo myservo4;
+// Serial
+String scommand;
+char sc;
+char command ;
+int count = 0;
+char buffer[50];
+String text;
+
+// come nano
+String rcommand;
+char rc;
+char command1 ;
+
+void setup() {
+
+  Serial.begin(19200);
+  mySerial.begin(19200);
+
+  myservo1.attach(3);
+  myservo2.attach(5);
+  myservo3.attach(6);
+  myservo4.attach(9);
+
+}
+
+void loop() {
+  if (mySerial.available()) {
+    rcommand = mySerial.readString();
+  }
+  if (Serial.available()) {
+    scommand = Serial.readString();
+    scommand.trim();
+  }
+
+
+  ////////////////////////////////////////////////////////////////////
+  ////////////////this section for Cylinder////////////////////////////
+  ////////////////////////////////////////////////////////////////////
+
+  //if (scommand == "Cylinder")
+  if (scommand == "Cylinder" && rcommand == "Cylinder")
+  {
+    Serial.println("Cylinder");
+    myservo4.write(60);
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+    // turn right
+    for (int pos = 50; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+
+    //open elbow
+    for (int pos = 140; pos >= 60; pos -= 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    // turn center
+    for (int pos = 0; pos <= 50; pos += 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+  }
+
+  ////////////////////////////////////////////////////////////////////
+  ////////////////this section for hexagon////////////////////////////
+  ////////////////////////////////////////////////////////////////////
+
+  //if (scommand == "Hexagon")
+  if (scommand == "Hexagon" && rcommand == "Hexagon")
+  {
+    Serial.println("Hexagon");
+    myservo4.write(60);
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+    // turn right
+    for (int pos = 50; pos >= 25; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+
+    //open elbow
+    for (int pos = 140; pos >= 60; pos -= 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    // turn center
+    for (int pos = 25; pos <= 50; pos += 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+  }
+
+
+
+
+////////////////////////////////////////////////////////////////////
+/////////////////this section for Square////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+  //if (scommand == "Square")
+  if (scommand == "Square" && rcommand == "Square")
+  {
+    Serial.println("Square");
+    myservo4.write(60);
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+    // turn Left
+    for (int pos = 50; pos <= 80; pos += 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+
+    //open elbow
+    for (int pos = 140; pos >= 60; pos -= 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up start
+
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    // turn center
+    for (int pos = 80; pos >= 50; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+  }
+
+
+
+////////////////////////////////////////////////////////////////////
+/////////////////this section for Cone//////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+  //if (scommand == "Cone")
+  if (scommand == "Cone" && rcommand == "Cone")
+  {
+    Serial.println("Cone");
+    myservo4.write(60);
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+    //close elbow
+                   // waits 15 ms for the servo to reach the position
+    }
+
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+    // turn right
+
+
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+
+    //open elbow
+
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    // turn center
+    for (int pos = 110; pos >= 50; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+  }
+
+
+  ////////////////////////////////////////////////////////////////////
+/////////////////this section for Ball//////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+  //if (scommand == "Ball")
+  if (scommand == "Ball" && rcommand == "Ball")
+  {
+    Serial.println("Ball");
+    myservo4.write(60);
+
+    //down start
+    for (int pos = 60; pos <= 100; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //up start
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+    // turn right
+    for (int pos = 50; pos <= 140; pos += 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+
+    //down start
+
+    for (int pos = 40; pos <= 110; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 100; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //down end
+
+    //open elbow
+
+    //up start
+    for (int pos = 140; pos >= 90; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 110; pos >= 40; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo3.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    for (int pos = 90; pos >= 60; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo2.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    //up end
+
+    //close elbow
+    for (int pos = 60; pos <= 140; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo4.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+    // turn center
+    for (int pos = 140; pos >= 50; pos -= 1) { // goes from 180 degrees to 0 degrees
+      myservo1.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(30);                       // waits 15 ms for the servo to reach the position
+    }
+
+  }
+
+}
